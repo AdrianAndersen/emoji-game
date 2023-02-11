@@ -3,6 +3,11 @@ import emojis from "../lib/emoji";
 import {randomElementFromArray} from "../lib/arrayUtils";
 import funkyEmojis from "../lib/funkyEmojis";
 
+type EmojiElement = {
+    description: string,
+    emoji: string
+}
+
 const FunkyButton = ({label, color, onClick}: {label: string, color: string, onClick: any}) => {
     return <button onClick={onClick} style={{backgroundColor: color, padding: "1rem", border: "none", margin: "1rem", cursor: "pointer"}}>{label}</button>
 }
@@ -22,15 +27,15 @@ const FunkyEmoji = ({custom, emoji}: {custom: boolean, emoji: string}) => {
 function Game() {
     const [points, setPoints] = useState(0)
     const [skips, setSkips] = useState(0)
-    const [currentEmoji, setCurrentEmoji] = useState({});
-    const [currentFunky, setCurrentFunky] = useState({});
+    const [currentEmoji, setCurrentEmoji] = useState<EmojiElement>({} as EmojiElement);
+    const [currentFunky, setCurrentFunky] = useState<EmojiElement>({} as EmojiElement);
     const [isFunky, setIsFunky] = useState(true);
     const [random, setRandom] = useState(0.3);
 
     const reset = () => {
         setPoints(0);
         setSkips(0);
-        setCurrentEmoji("")
+        loadNextEmoji();
     }
 
     const loadNextEmoji = () => {
